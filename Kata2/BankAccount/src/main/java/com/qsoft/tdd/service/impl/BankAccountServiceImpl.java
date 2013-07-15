@@ -4,6 +4,7 @@ import com.qsoft.tdd.service.BankAccountService;
 import com.qsoft.tdd.dao.BankAccountDAO;
 import com.qsoft.tdd.model.BankAccount;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 /**
  * User: Hunter

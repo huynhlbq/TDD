@@ -3,9 +3,11 @@ package com.qsoft.tdd;
 import com.qsoft.tdd.dao.BankAccountDAO;
 import com.qsoft.tdd.model.BankAccount;
 import com.qsoft.tdd.service.BankAccountService;
+import com.qsoft.tdd.service.impl.BankAccountServiceImpl;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
@@ -30,8 +32,8 @@ public class BankAccountTest
     @Mock
     BankAccountDAO bankAccountDAO;
 
-    @Autowired
-    BankAccountService bankAccountService;
+    @InjectMocks
+    BankAccountService bankAccountService = new BankAccountServiceImpl();
 
     @Before
     public void setup()
@@ -51,6 +53,14 @@ public class BankAccountTest
     public void testCreateAccount()
     {
         BankAccount bankAccount = bankAccountService.createAccount("123456678");
+
+        assertEquals(0, bankAccount.getBalance());
+    }
+
+    @Test
+    public void testFindAccountByAccountNumber()
+    {
+        BankAccount bankAccount = bankAccountService.findAccount("123456678");
 
         assertEquals(0, bankAccount.getBalance());
     }

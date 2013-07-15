@@ -12,4 +12,6 @@ public interface BankAccountService
 
     public BankAccount createAccount(String accountNumber);
 
+    public BankAccount findAccount(String accountNumber);
+
 }
