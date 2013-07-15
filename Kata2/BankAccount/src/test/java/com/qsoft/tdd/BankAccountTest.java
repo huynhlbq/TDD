@@ -65,4 +65,13 @@ public class BankAccountTest
         assertEquals(0, bankAccount.getBalance());
     }
 
+    @Test
+    public void testDeposit()
+    {
+        BankAccount bankAccount = bankAccountService.findAccount("123456678");
+        long balanceBefore = bankAccount.getBalance();
+        bankAccountService.deposit("123456678", 100, "just add 100 to this account.");
+        assertEquals(100, bankAccount.getBalance() - balanceBefore);
+    }
+
 }
