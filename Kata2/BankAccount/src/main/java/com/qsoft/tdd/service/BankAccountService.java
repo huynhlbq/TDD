@@ -1,6 +1,7 @@
 package com.qsoft.tdd.service;
 
 import com.qsoft.tdd.model.BankAccount;
+import com.qsoft.tdd.model.BankAccountTransaction;
 
 /**
  * User: Hunter
@@ -15,4 +16,6 @@ public interface BankAccountService
     public BankAccount findAccount(String accountNumber);
 
     public void deposit(BankAccount bankAccount, long money, String description);
+
+    public BankAccountTransaction findTransactionByAccount(BankAccount bankAccount);
 }

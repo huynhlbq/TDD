@@ -1,7 +1,9 @@
 package com.qsoft.tdd;
 
 import com.qsoft.tdd.dao.BankAccountDAO;
+import com.qsoft.tdd.dao.BankAccountTransactionDAO;
 import com.qsoft.tdd.model.BankAccount;
+import com.qsoft.tdd.model.BankAccountTransaction;
 import com.qsoft.tdd.service.BankAccountService;
 import com.qsoft.tdd.service.impl.BankAccountServiceImpl;
 import org.junit.Before;
@@ -31,6 +33,9 @@ public class BankAccountTest
 {
     @Mock
     BankAccountDAO bankAccountDAO;
+
+    @Mock
+    BankAccountTransactionDAO bankAccountTransactionDAO;
 
     @InjectMocks
     BankAccountService bankAccountService = new BankAccountServiceImpl();
@@ -72,6 +77,15 @@ public class BankAccountTest
         long balanceBefore = bankAccount.getBalance();
         bankAccountService.deposit(bankAccount, 100, "just add 100 to this account.");
         assertEquals(100, bankAccount.getBalance() - balanceBefore);
+    }
+
+    @Test
+    public void testTimeDeposit()
+    {
+        BankAccount bankAccount = bankAccountService.findAccount("123456678");
+        bankAccountService.deposit(bankAccount, 100, "just add 100 to this account.");
+        BankAccountTransaction bankAccountTransaction = bankAccountService.findTransactionByAccount(bankAccount);
+        assertEquals(100, bankAccountTransaction.getDepositTime().getTime());
     }
 
 }
