@@ -14,5 +14,5 @@ public interface BankAccountService
 
     public BankAccount findAccount(String accountNumber);
 
-    public void deposit(String accountNumber, long money, String description);
+    public void deposit(BankAccount bankAccount, long money, String description);
 }

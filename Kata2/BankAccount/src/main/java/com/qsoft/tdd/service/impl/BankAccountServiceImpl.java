@@ -29,7 +29,7 @@ public class BankAccountServiceImpl implements BankAccountService
     }
 
     @Override
-    public void deposit(String accountNumber, long money, String description)
+    public void deposit(BankAccount bankAccount, long money, String description)
     {
         //To change body of implemented methods use File | Settings | File Templates.
     }
