@@ -58,4 +58,10 @@ public class StringCalculatorTest
     {
         assertEquals(2, StringCalculator.add("1001,2"));
     }
+
+    @Test
+    public void testWithUndefinedLength() throws Exception
+    {
+        assertEquals(6, StringCalculator.add("//[***]\n1***2***3"));
+    }
 }
