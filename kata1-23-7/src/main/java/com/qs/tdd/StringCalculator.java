@@ -1,8 +1,8 @@
 package com.qs.tdd;
 
 import java.lang.String;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * User: Hunter
@@ -11,6 +11,7 @@ import java.util.List;
 public class StringCalculator
 {
     private static final String DEFAULT_DELIMITER_REGEX = ",|\n";
+    private static final String CUSTOM_DELIMITER_PATTERN = "//((.)|\\[(.*?)\\])\\n";
     private static final String CUSTOM_DEFINE = "//";
     private static final String SEPARATOR = "; ";
 
@@ -65,8 +66,17 @@ public class StringCalculator
 
     private static String[] splitByCustomDefine(String numbers)
     {
-        String customSplit = numbers.substring(CUSTOM_DEFINE.length(), CUSTOM_DEFINE.length() + 1);
-        String tmp = numbers.substring(CUSTOM_DEFINE.length() + 1);
-        return tmp.split(customSplit + "|" + DEFAULT_DELIMITER_REGEX);
+        Pattern p = Pattern.compile(CUSTOM_DELIMITER_PATTERN);
+        Matcher m = p.matcher(numbers);
+
+        String delimiter = "";
+        if (m.find())
+        {
+            delimiter = m.group(1).replaceAll("\\[|\\]", "");
+        }
+        String toSplit  = Pattern.quote(delimiter);
+
+        numbers = numbers.substring(numbers.indexOf("\n")+1);
+        return numbers.split(toSplit);
     }
 }
