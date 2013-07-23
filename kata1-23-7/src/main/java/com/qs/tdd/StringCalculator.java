@@ -8,7 +8,7 @@ import java.lang.String;
  */
 public class StringCalculator
 {
-    private static final String DEFAULT_DELIMITER_REGEX = ",";
+    private static final String DEFAULT_DELIMITER_REGEX = ",|\n";
 
     public static int add(String numbers)
     {
