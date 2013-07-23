@@ -11,14 +11,21 @@ import static junit.framework.TestCase.assertEquals;
 public class StringCalculatorTest
 {
     @Test
-    public void addEmptyStringTest()
+    public void testAddEmptyString()
     {
         assertEquals(0, StringCalculator.add(""));
     }
 
     @Test
-    public void addOneStringTest() throws Exception
+    public void testAddOneNumber()
     {
         assertEquals(2, StringCalculator.add("2"));
     }
+
+    @Test
+    public void testAddTwoNumbers()
+    {
+        assertEquals(3, StringCalculator.add("1,2"));
+    }
+
 }
