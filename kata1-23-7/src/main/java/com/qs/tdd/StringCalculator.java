@@ -6,12 +6,21 @@ package com.qs.tdd;
  */
 public class StringCalculator
 {
+    private static final String DEFAULT_DELIMITER_REGEX = ",";
+
     public static int add(String numbers)
     {
         if (numbers.isEmpty())
         {
             return 0;
         }
-        return Integer.parseInt(numbers);
+
+        int total = 0;
+        for (String param : numbers.split(DEFAULT_DELIMITER_REGEX))
+        {
+            int paramNumber = Integer.parseInt(param);
+            total += paramNumber;
+        }
+        return total;
     }
 }
