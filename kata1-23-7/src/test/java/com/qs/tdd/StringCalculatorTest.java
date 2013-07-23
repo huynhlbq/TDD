@@ -5,6 +5,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import static junit.framework.TestCase.assertEquals;
+
 /**
  * User: Hunter
  * Date: 7/23/13
@@ -12,19 +13,19 @@ import static junit.framework.TestCase.assertEquals;
 public class StringCalculatorTest
 {
     @Test
-    public void testAddEmptyString()
+    public void testAddEmptyString() throws Exception
     {
         assertEquals(0, StringCalculator.add(""));
     }
 
     @Test
-    public void testAddOneNumber()
+    public void testAddOneNumber() throws Exception
     {
         assertEquals(2, StringCalculator.add("2"));
     }
 
     @Test
-    public void testAddTwoNumbers()
+    public void testAddTwoNumbers() throws Exception
     {
         assertEquals(3, StringCalculator.add("1,2"));
     }
@@ -43,7 +44,8 @@ public class StringCalculatorTest
 
     @Rule
     public ExpectedException expectedException = ExpectedException.none();
-    @Test (expected = NegativeNumberNotAllowedException.class)
+
+    @Test
     public void addNegativeNumberTest() throws Exception
     {
         expectedException.expect(NegativeNumberNotAllowedException.class);

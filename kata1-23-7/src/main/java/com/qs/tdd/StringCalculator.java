@@ -1,6 +1,8 @@
 package com.qs.tdd;
 
 import java.lang.String;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * User: Hunter
@@ -10,8 +12,9 @@ public class StringCalculator
 {
     private static final String DEFAULT_DELIMITER_REGEX = ",|\n";
     private static final String CUSTOM_DEFINE = "//";
+    private static final String SEPARATOR = "; ";
 
-    public static int add(String numbers)
+    public static int add(String numbers) throws NegativeNumberNotAllowedException
     {
         if (numbers.isEmpty())
         {
@@ -19,12 +22,26 @@ public class StringCalculator
         }
         String[] numbersString = tokenizer(numbers);
         int total = 0;
+        String negativeNumberString = "";
         for (String aNumbersString : numbersString)
         {
             if (!aNumbersString.isEmpty())
             {
-                total += string2Int(aNumbersString);
+                int aNumber = string2Int(aNumbersString);
+                if (aNumber < 0)
+                {
+                    if (!negativeNumberString.isEmpty())
+                    {
+                        negativeNumberString += SEPARATOR;
+                    }
+                    negativeNumberString += aNumbersString;
+                }
+                total += aNumber;
             }
+        }
+        if (!negativeNumberString.isEmpty())
+        {
+            throw new NegativeNumberNotAllowedException("negatives not allowed: " + negativeNumberString);
         }
         return total;
     }
