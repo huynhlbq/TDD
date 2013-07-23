@@ -26,4 +26,10 @@ public class StringCalculatorTest
     {
         assertEquals(3, StringCalculator.add("1,2"));
     }
+
+    @Test
+    public void testNewLineBetweenNumbers() throws Exception
+    {
+        assertEquals(6, StringCalculator.add("1\n2,3"));
+    }
 }
