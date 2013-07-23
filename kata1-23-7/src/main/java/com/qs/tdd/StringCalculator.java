@@ -69,14 +69,23 @@ public class StringCalculator
         Pattern p = Pattern.compile(CUSTOM_DELIMITER_PATTERN);
         Matcher m = p.matcher(numbers);
 
-        String delimiter = "";
-        if (m.find())
+        String delimiter;
+        String toSplit = "";
+        String[] delimiters = new String[0];
+        while (m.find())
         {
-            delimiter = m.group(1).replaceAll("\\[|\\]", "");
+            delimiter = m.group(1);
+            delimiters = delimiter.split("\\]|\\[");
         }
-        String toSplit  = Pattern.quote(delimiter);
+        for (String delimiterString : delimiters)
+        {
+            if (!delimiterString.isEmpty())
+            {
+                toSplit += Pattern.quote(delimiterString) + "|";
+            }
+        }
 
-        numbers = numbers.substring(numbers.indexOf("\n")+1);
+        numbers = numbers.substring(numbers.indexOf("\n") + 1);
         return numbers.split(toSplit);
     }
 }
