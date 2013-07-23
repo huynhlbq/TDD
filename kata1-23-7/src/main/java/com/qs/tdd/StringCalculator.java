@@ -36,7 +36,10 @@ public class StringCalculator
                     }
                     negativeNumberString += aNumbersString;
                 }
-                total += aNumber;
+                else if (aNumber < 1001)
+                {
+                    total += aNumber;
+                }
             }
         }
         if (!negativeNumberString.isEmpty())
