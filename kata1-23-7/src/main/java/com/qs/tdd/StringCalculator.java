@@ -1,5 +1,8 @@
 package com.qs.tdd;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * User: Hunter
  * Date: 7/23/13
@@ -25,6 +28,7 @@ public class StringCalculator
         }
 
         int total = 0;
+        String negativeString = "";
         for (String param : numbers.split(delimiter))
         {
             if (param.isEmpty())
@@ -34,9 +38,17 @@ public class StringCalculator
             int paramNumber = Integer.parseInt(param);
             if (paramNumber < 0)
             {
-                throw new NegativeNumberNotAllowedException("negatives not allowed");
+                if (!negativeString.isEmpty())
+                {
+                    negativeString += "; ";
+                }
+                negativeString += param;
             }
             total += paramNumber;
+        }
+        if (!negativeString.isEmpty())
+        {
+            throw new NegativeNumberNotAllowedException("negatives not allowed: " + negativeString);
         }
         return total;
     }

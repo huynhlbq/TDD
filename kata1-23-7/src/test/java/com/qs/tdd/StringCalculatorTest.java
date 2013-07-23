@@ -52,11 +52,19 @@ public class StringCalculatorTest
     }
 
     @Test
-    public void addNegativeStringTest() throws Exception
+    public void addNegativeNumberTest() throws Exception
     {
         expectedException.expect(NegativeNumberNotAllowedException.class);
-        expectedException.expectMessage("negatives not allowed");
+        expectedException.expectMessage("negatives not allowed: -2");
         StringCalculator.add("1,-2");
+    }
+
+    @Test
+    public void addMultiNegativeNumberTest() throws Exception
+    {
+        expectedException.expect(NegativeNumberNotAllowedException.class);
+        expectedException.expectMessage("negatives not allowed: -2; -3; -4");
+        StringCalculator.add("1,-2,-3,-4");
     }
 
 }
