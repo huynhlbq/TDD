@@ -36,6 +36,10 @@ public class StringCalculator
                 continue;
             }
             int paramNumber = Integer.parseInt(param);
+            if (paramNumber > 1000)
+            {
+                continue;
+            }
             if (paramNumber < 0)
             {
                 if (!negativeString.isEmpty())
