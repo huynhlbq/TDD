@@ -45,5 +45,12 @@ public class StringCalculatorTest
         expectedException.expectMessage("For input string: \"1n\"");
     }
 
+    @Test
+    public void testWithCustomDelimiter() throws Exception
+    {
+        assertEquals(3, StringCalculator.add("//;\n1;2"));
+    }
+
+
 
 }
