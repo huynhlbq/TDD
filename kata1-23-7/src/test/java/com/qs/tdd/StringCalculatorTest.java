@@ -13,19 +13,19 @@ import static junit.framework.TestCase.assertEquals;
 public class StringCalculatorTest
 {
     @Test
-    public void testAddEmptyString()
+    public void testAddEmptyString() throws NegativeNumberNotAllowedException
     {
         assertEquals(0, StringCalculator.add(""));
     }
 
     @Test
-    public void testAddOneNumber()
+    public void testAddOneNumber() throws NegativeNumberNotAllowedException
     {
         assertEquals(2, StringCalculator.add("2"));
     }
 
     @Test
-    public void testAddTwoNumbers()
+    public void testAddTwoNumbers() throws NegativeNumberNotAllowedException
     {
         assertEquals(3, StringCalculator.add("1,2"));
     }
@@ -51,6 +51,12 @@ public class StringCalculatorTest
         assertEquals(3, StringCalculator.add("//;\n1;2"));
     }
 
-
+    @Test
+    public void addNegativeStringTest() throws Exception
+    {
+        expectedException.expect(NegativeNumberNotAllowedException.class);
+        expectedException.expectMessage("negatives not allowed");
+        StringCalculator.add("1,-2");
+    }
 
 }

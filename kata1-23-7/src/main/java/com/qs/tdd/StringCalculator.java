@@ -9,7 +9,7 @@ public class StringCalculator
     private static final String DEFAULT_DELIMITER_REGEX = ",|\n";
     private static final String CUSTOM_DEFINE = "//";
 
-    public static int add(String numbers)
+    public static int add(String numbers) throws NegativeNumberNotAllowedException
     {
         String delimiter = DEFAULT_DELIMITER_REGEX;
         if (numbers.isEmpty())
@@ -32,6 +32,10 @@ public class StringCalculator
                 continue;
             }
             int paramNumber = Integer.parseInt(param);
+            if (paramNumber < 0)
+            {
+                throw new NegativeNumberNotAllowedException("negatives not allowed");
+            }
             total += paramNumber;
         }
         return total;
