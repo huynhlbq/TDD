@@ -1,6 +1,8 @@
 package com.qs.tdd;
 
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import static junit.framework.TestCase.assertEquals;
 
@@ -33,5 +35,15 @@ public class StringCalculatorTest
     {
         assertEquals(6, StringCalculator.add("1\n2,3"));
     }
+
+    @Rule
+    public ExpectedException expectedException = ExpectedException.none();
+    @Test (expected = NumberFormatException.class)
+    public void testWithInvalidInput() throws Exception
+    {
+        StringCalculator.add("1n,\n");
+        expectedException.expectMessage("For input string: \"1n\"");
+    }
+
 
 }
