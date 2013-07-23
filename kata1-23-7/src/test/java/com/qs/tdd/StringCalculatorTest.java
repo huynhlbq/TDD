@@ -67,4 +67,10 @@ public class StringCalculatorTest
         StringCalculator.add("1,-2,-3,-4");
     }
 
+    @Test
+    public void testNumberGreaterThan1000() throws Exception
+    {
+        assertEquals(2, StringCalculator.add("1001,2"));
+    }
+
 }
