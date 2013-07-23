@@ -1,6 +1,8 @@
 package com.qs.tdd;
 
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import static junit.framework.TestCase.assertEquals;
 /**
@@ -39,4 +41,13 @@ public class StringCalculatorTest
         assertEquals(3, StringCalculator.add("//;\n1;2"));
     }
 
+    @Rule
+    public ExpectedException expectedException = ExpectedException.none();
+    @Test (expected = NegativeNumberNotAllowedException.class)
+    public void addNegativeNumberTest() throws Exception
+    {
+        expectedException.expect(NegativeNumberNotAllowedException.class);
+        expectedException.expectMessage("negatives not allowed: -2; -4");
+        StringCalculator.add("1,-2,-4");
+    }
 }
