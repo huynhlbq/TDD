@@ -52,4 +52,10 @@ public class StringCalculatorTest
         expectedException.expectMessage("negatives not allowed: -2; -4");
         StringCalculator.add("1,-2,-4");
     }
+
+    @Test
+    public void testNumberGreaterThan1000() throws Exception
+    {
+        assertEquals(2, StringCalculator.add("1001,2"));
+    }
 }
