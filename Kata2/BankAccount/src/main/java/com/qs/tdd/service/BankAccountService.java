@@ -9,4 +9,6 @@ import com.qs.tdd.model.BankAccount;
 public interface BankAccountService
 {
     BankAccount openAccount(long accountNumber);
+
+    BankAccount getAccount(long accountNumber);
 }

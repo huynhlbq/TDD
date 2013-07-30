@@ -9,6 +9,16 @@ public class BankAccount
     private long accountNumber;
     private double balance;
 
+    public BankAccount()
+    {
+    }
+
+    public BankAccount(long accountNumber, double balance)
+    {
+        this.accountNumber = accountNumber;
+        this.balance = balance;
+    }
+
     public double getBalance()
     {
         return balance;
