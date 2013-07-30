@@ -68,8 +68,16 @@ public class BankAccountServiceImpl implements BankAccountService
     }
 
     @Override
-    public void withdraw(long testAccountNumber, double amount, String description, Date time)
+    public void withdraw(long accountNumber, double amount, String description, Date time)
     {
-        //To change body of implemented methods use File | Settings | File Templates.
+        BankAccount account = getAccount(accountNumber);
+        account.setBalance(account.getBalance() - amount);
+        bankAccountDAO.update(account);
+        Transaction transaction = new Transaction();
+        transaction.setBankAccount(account);
+        transaction.setTransactionTimeStamp(time);
+        transaction.setAmount(amount);
+        transaction.setDescription(description);
+        transactionDAO.create(transaction);
     }
 }
