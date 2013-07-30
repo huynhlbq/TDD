@@ -42,14 +42,16 @@ public class BankAccountTest
     @InjectMocks
     BankAccountService bankAccountService = new BankAccountServiceImpl();
 
-    private Date date1;
+    private Date depositTime;
+    private Date withdrawTime;
 
     @Before
     public void setup() throws ParseException
     {
         MockitoAnnotations.initMocks(this);
 
-        date1 = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss").parse("2013/07/30 11:10:10");
+        depositTime = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss").parse("2013/07/30 11:10:10");
+        withdrawTime = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss").parse("2013/07/30 14:13:12");
 
         final BankAccount cacheAccountForModify = new BankAccount(TEST_ACCOUNT_NUMBER, 0);
 
@@ -112,7 +114,7 @@ public class BankAccountTest
     public void testDeposit()
     {
         bankAccountService.openAccount(TEST_ACCOUNT_NUMBER);
-        bankAccountService.deposit(TEST_ACCOUNT_NUMBER, 9999d, "deposit 9999$", date1);
+        bankAccountService.deposit(TEST_ACCOUNT_NUMBER, 9999d, "deposit 9999$", depositTime);
         BankAccount bankAccount = bankAccountService.getAccount(TEST_ACCOUNT_NUMBER);
         assertNotNull(bankAccount);
         assertEquals(TEST_ACCOUNT_NUMBER, bankAccount.getAccountNumber());
@@ -120,20 +122,20 @@ public class BankAccountTest
     }
 
     @Test
-    public void testTransaction()
+    public void testDepositTransaction()
     {
         bankAccountService.openAccount(TEST_ACCOUNT_NUMBER);
-        bankAccountService.deposit(TEST_ACCOUNT_NUMBER, 9999d, "deposit 9999$", date1);
+        bankAccountService.deposit(TEST_ACCOUNT_NUMBER, 9999d, "deposit 9999$", depositTime);
         BankAccount bankAccount = bankAccountService.getAccount(TEST_ACCOUNT_NUMBER);
 
         //before transaction 1 milli
-        Date startTime = new Date(date1.getTime() - 1);
+        Date startTime = new Date(depositTime.getTime() - 1);
         //after transaction 1 milli
-        Date endTime = new Date(date1.getTime() + 1);
+        Date endTime = new Date(depositTime.getTime() + 1);
         List<Transaction> transactions = bankAccountService.getTransactions(bankAccount, startTime, endTime);
         assertNotNull(transactions);
         assertEquals(1, transactions.size());
-        assertEquals(date1, transactions.get(0).getTransactionTimeStamp());
+        assertEquals(depositTime, transactions.get(0).getTransactionTimeStamp());
     }
 
     @Test
@@ -146,5 +148,22 @@ public class BankAccountTest
         assertNotNull(bankAccount);
         assertEquals(TEST_ACCOUNT_NUMBER, bankAccount.getAccountNumber());
         assertEquals(9900d, bankAccount.getBalance());
+    }
+
+    @Test
+    public void testWithdrawTransaction()
+    {
+        bankAccountService.openAccount(TEST_ACCOUNT_NUMBER);
+        bankAccountService.withdraw(TEST_ACCOUNT_NUMBER, 11d, "withdraw 11$", withdrawTime);
+        BankAccount bankAccount = bankAccountService.getAccount(TEST_ACCOUNT_NUMBER);
+
+        //before transaction 1 milli
+        Date startTime = new Date(withdrawTime.getTime() - 1);
+        //after transaction 1 milli
+        Date endTime = new Date(withdrawTime.getTime() + 1);
+        List<Transaction> transactions = bankAccountService.getTransactions(bankAccount, startTime, endTime);
+        assertNotNull(transactions);
+        assertEquals(1, transactions.size());
+        assertEquals(withdrawTime, transactions.get(0).getTransactionTimeStamp());
     }
 }
