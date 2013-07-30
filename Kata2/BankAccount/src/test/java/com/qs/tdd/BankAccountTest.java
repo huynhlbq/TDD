@@ -57,4 +57,15 @@ public class BankAccountTest
         assertNotNull(bankAccount);
         assertEquals(123456789, bankAccount.getAccountNumber());
     }
+
+    @Test
+    public void testDeposit()
+    {
+        bankAccountService.openAccount(123456789);
+        bankAccountService.deposit(123456789, 9999d, "deposit 9999$");
+        BankAccount bankAccount = bankAccountService.getAccount(123456789);
+        assertNotNull(bankAccount);
+        assertEquals(123456789, bankAccount.getAccountNumber());
+        assertEquals(9999d, bankAccount.getBalance());
+    }
 }

@@ -26,4 +26,10 @@ public class BankAccountServiceImpl implements BankAccountService
     {
         return bankAccountDAO.getAccount(accountNumber);
     }
+
+    @Override
+    public void deposit(long accountNumber, double amount, String description)
+    {
+        //To change body of implemented methods use File | Settings | File Templates.
+    }
 }

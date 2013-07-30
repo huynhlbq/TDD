@@ -11,4 +11,6 @@ public interface BankAccountService
     BankAccount openAccount(long accountNumber);
 
     BankAccount getAccount(long accountNumber);
+
+    void deposit(long accountNumber, double amount, String description);
 }
