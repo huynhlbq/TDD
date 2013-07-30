@@ -201,6 +201,20 @@ public class BankAccountTest
         List<Transaction> transactions = bankAccountService.getTransactions(bankAccount, startTime, endTime);
         assertNotNull(transactions);
         assertEquals(3, transactions.size());
-        assertEquals(withdrawTime, transactions.get(0).getTransactionTimeStamp());
+    }
+
+    @Test
+    public void testLatestTransactions()
+    {
+        bankAccountService.openAccount(TEST_ACCOUNT_NUMBER);
+        bankAccountService.deposit(TEST_ACCOUNT_NUMBER, 9999d, "deposit 9999$", depositTime);
+        bankAccountService.withdraw(TEST_ACCOUNT_NUMBER, 11d, "withdraw 11$", withdrawTime);
+        bankAccountService.deposit(TEST_ACCOUNT_NUMBER, 9999d, "deposit 9999$", depositTime2);
+        bankAccountService.withdraw(TEST_ACCOUNT_NUMBER, 9999d, "withdraw 9999$", withdrawTime2);
+        BankAccount bankAccount = bankAccountService.getAccount(TEST_ACCOUNT_NUMBER);
+
+        List<Transaction> transactions = bankAccountService.getLatestTransactions(bankAccount, 2);
+        assertNotNull(transactions);
+        assertEquals(2, transactions.size());
     }
 }

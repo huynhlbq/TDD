@@ -86,4 +86,10 @@ public class BankAccountServiceImpl implements BankAccountService
     {
         return transactionDAO.findByAccount(bankAccount);
     }
+
+    @Override
+    public List<Transaction> getLatestTransactions(BankAccount bankAccount, int total)
+    {
+        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    }
 }

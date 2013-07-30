@@ -23,4 +23,6 @@ public interface BankAccountService
     void withdraw(long testAccountNumber, double amount, String description, Date time);
 
     List<Transaction> getAllTransactions(BankAccount bankAccount);
+
+    List<Transaction> getLatestTransactions(BankAccount bankAccount, int total);
 }
