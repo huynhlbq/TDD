@@ -80,4 +80,10 @@ public class BankAccountServiceImpl implements BankAccountService
         transaction.setDescription(description);
         transactionDAO.create(transaction);
     }
+
+    @Override
+    public List<Transaction> getAllTransactions(BankAccount bankAccount)
+    {
+        return null;
+    }
 }

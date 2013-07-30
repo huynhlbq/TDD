@@ -21,4 +21,6 @@ public interface BankAccountService
     List<Transaction> getTransactions(BankAccount bankAccount, Date startTime, Date endTime);
 
     void withdraw(long testAccountNumber, double amount, String description, Date time);
+
+    List<Transaction> getAllTransactions(BankAccount bankAccount);
 }
