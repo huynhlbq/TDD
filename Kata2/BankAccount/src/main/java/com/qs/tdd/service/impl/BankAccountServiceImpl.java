@@ -1,8 +1,14 @@
 package com.qs.tdd.service.impl;
 
 import com.qs.tdd.dao.BankAccountDAO;
+import com.qs.tdd.dao.TransactionDAO;
 import com.qs.tdd.model.BankAccount;
+import com.qs.tdd.model.Transaction;
 import com.qs.tdd.service.BankAccountService;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**
  * User: Hunter
@@ -11,6 +17,7 @@ import com.qs.tdd.service.BankAccountService;
 public class BankAccountServiceImpl implements BankAccountService
 {
     private BankAccountDAO bankAccountDAO;
+    private TransactionDAO transactionDAO;
 
     @Override
     public BankAccount openAccount(long accountNumber)
@@ -28,10 +35,22 @@ public class BankAccountServiceImpl implements BankAccountService
     }
 
     @Override
-    public void deposit(long accountNumber, double amount, String description)
+    public void deposit(long accountNumber, double amount, String description, Date time)
     {
         BankAccount account = getAccount(accountNumber);
         account.setBalance(account.getBalance() + amount);
         bankAccountDAO.update(account);
+        Transaction transaction = new Transaction();
+        transaction.setBankAccount(account);
+        transaction.setTransactionTimeStamp(time);
+        transaction.setAmount(amount);
+        transaction.setDescription(description);
+        transactionDAO.create(transaction);
+    }
+
+    @Override
+    public List<Transaction> getTransactions(BankAccount bankAccount, Date startTime, Date endTime)
+    {
+        return null;
     }
 }

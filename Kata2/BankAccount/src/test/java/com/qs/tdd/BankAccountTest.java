@@ -1,10 +1,11 @@
 package com.qs.tdd;
 
 import com.qs.tdd.dao.BankAccountDAO;
+import com.qs.tdd.dao.TransactionDAO;
 import com.qs.tdd.model.BankAccount;
+import com.qs.tdd.model.Transaction;
 import com.qs.tdd.service.BankAccountService;
 import com.qs.tdd.service.impl.BankAccountServiceImpl;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -14,9 +15,16 @@ import org.mockito.MockitoAnnotations;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
 import static junit.framework.Assert.assertNotNull;
 import static junit.framework.TestCase.assertEquals;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.anyObject;
+import static org.mockito.Mockito.doAnswer;
 
 /**
  * User: Hunter
@@ -24,18 +32,28 @@ import static org.mockito.Mockito.*;
  */
 public class BankAccountTest
 {
+    public static final int TEST_ACCOUNT_NUMBER = 123456789;
     @Mock
     private BankAccountDAO bankAccountDAO;
+
+    @Mock
+    private TransactionDAO transactionDAO;
 
     @InjectMocks
     BankAccountService bankAccountService = new BankAccountServiceImpl();
 
+    private Date date1;
+
     @Before
-    public void setup()
+    public void setup() throws ParseException
     {
         MockitoAnnotations.initMocks(this);
 
-        final BankAccount cacheAccountForModify = new BankAccount(123456789, 0);
+        date1 = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss").parse("2013/07/30 11:10:10");
+
+        final BankAccount cacheAccountForModify = new BankAccount(TEST_ACCOUNT_NUMBER, 0);
+
+        final List<Transaction> allTransactions = new ArrayList<Transaction>();
 
         Mockito.when(bankAccountDAO.getAccount(Mockito.anyLong())).then(new Answer<BankAccount>()
         {
@@ -55,32 +73,66 @@ public class BankAccountTest
             }
         }).when(bankAccountDAO).update((BankAccount) anyObject());
 
+        doAnswer(new Answer<Void>()
+        {
+            @Override
+            public Void answer(InvocationOnMock invocation) throws Throwable
+            {
+                allTransactions.add((Transaction) invocation.getArguments()[0]);
+                return null;
+            }
+        }).when(transactionDAO).create((Transaction) anyObject());
+
+        Mockito.when(transactionDAO.findByAccount((BankAccount) Mockito.anyObject())).then(new Answer<List<Transaction>>()
+        {
+            public List<Transaction> answer(InvocationOnMock invocationOnMock) throws Throwable
+            {
+                return allTransactions;
+            }
+        });
     }
 
     @Test
     public void testCreateAccount()
     {
-        BankAccount bankAccount = bankAccountService.openAccount(123456789);
+        BankAccount bankAccount = bankAccountService.openAccount(TEST_ACCOUNT_NUMBER);
         assertEquals(0d, bankAccount.getBalance());
     }
 
     @Test
     public void testGetAccount()
     {
-        bankAccountService.openAccount(123456789);
-        BankAccount bankAccount = bankAccountService.getAccount(123456789);
+        bankAccountService.openAccount(TEST_ACCOUNT_NUMBER);
+        BankAccount bankAccount = bankAccountService.getAccount(TEST_ACCOUNT_NUMBER);
         assertNotNull(bankAccount);
-        assertEquals(123456789, bankAccount.getAccountNumber());
+        assertEquals(TEST_ACCOUNT_NUMBER, bankAccount.getAccountNumber());
     }
 
     @Test
     public void testDeposit()
     {
-        bankAccountService.openAccount(123456789);
-        bankAccountService.deposit(123456789, 9999d, "deposit 9999$");
-        BankAccount bankAccount = bankAccountService.getAccount(123456789);
+        bankAccountService.openAccount(TEST_ACCOUNT_NUMBER);
+        bankAccountService.deposit(TEST_ACCOUNT_NUMBER, 9999d, "deposit 9999$", date1);
+        BankAccount bankAccount = bankAccountService.getAccount(TEST_ACCOUNT_NUMBER);
         assertNotNull(bankAccount);
-        assertEquals(123456789, bankAccount.getAccountNumber());
+        assertEquals(TEST_ACCOUNT_NUMBER, bankAccount.getAccountNumber());
         assertEquals(9999d, bankAccount.getBalance());
+    }
+
+    @Test
+    public void testTransaction()
+    {
+        bankAccountService.openAccount(TEST_ACCOUNT_NUMBER);
+        bankAccountService.deposit(TEST_ACCOUNT_NUMBER, 9999d, "deposit 9999$", date1);
+        BankAccount bankAccount = bankAccountService.getAccount(TEST_ACCOUNT_NUMBER);
+
+        //before transaction 1 milli
+        Date startTime = new Date(date1.getTime() - 1);
+        //after transaction 1 milli
+        Date endTime = new Date(date1.getTime() + 1);
+        List<Transaction> transactions = bankAccountService.getTransactions(bankAccount, startTime, endTime);
+        assertNotNull(transactions);
+        assertEquals(1, transactions.size());
+        assertEquals(date1, transactions.get(0).getTransactionTimeStamp());
     }
 }
