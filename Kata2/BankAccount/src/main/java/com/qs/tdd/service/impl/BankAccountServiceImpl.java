@@ -84,6 +84,6 @@ public class BankAccountServiceImpl implements BankAccountService
     @Override
     public List<Transaction> getAllTransactions(BankAccount bankAccount)
     {
-        return null;
+        return transactionDAO.findByAccount(bankAccount);
     }
 }
