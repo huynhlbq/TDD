@@ -7,7 +7,6 @@ import com.qs.tdd.model.Transaction;
 import com.qs.tdd.service.BankAccountService;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -21,7 +20,7 @@ public class BankAccountServiceImpl implements BankAccountService
     private TransactionDAO transactionDAO;
 
     @Override
-    public BankAccount openAccount(long accountNumber)
+    public BankAccount openAccount(long accountNumber, Date timeCreated)
     {
         BankAccount bankAccount = new BankAccount();
         bankAccount.setAccountNumber(accountNumber);

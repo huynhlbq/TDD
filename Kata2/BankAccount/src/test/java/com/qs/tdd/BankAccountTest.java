@@ -46,6 +46,7 @@ public class BankAccountTest
     private Date depositTime2;
     private Date withdrawTime;
     private Date withdrawTime2;
+    private Date timeCreated;
 
     @Before
     public void setup() throws ParseException
@@ -56,6 +57,7 @@ public class BankAccountTest
         withdrawTime = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss").parse("2013/07/30 14:13:12");
         depositTime2 = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss").parse("2013/07/30 15:10:10");
         withdrawTime2 = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss").parse("2013/07/30 16:13:12");
+        timeCreated = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss").parse("2013/07/19 11:11:11");
 
         final BankAccount cacheAccountForModify = new BankAccount(TEST_ACCOUNT_NUMBER, 0);
 
@@ -101,14 +103,14 @@ public class BankAccountTest
     @Test
     public void testCreateAccount()
     {
-        BankAccount bankAccount = bankAccountService.openAccount(TEST_ACCOUNT_NUMBER);
+        BankAccount bankAccount = bankAccountService.openAccount(TEST_ACCOUNT_NUMBER, timeCreated);
         assertEquals(0d, bankAccount.getBalance());
     }
 
     @Test
     public void testGetAccount()
     {
-        bankAccountService.openAccount(TEST_ACCOUNT_NUMBER);
+        bankAccountService.openAccount(TEST_ACCOUNT_NUMBER, timeCreated);
         BankAccount bankAccount = bankAccountService.getAccount(TEST_ACCOUNT_NUMBER);
         assertNotNull(bankAccount);
         assertEquals(TEST_ACCOUNT_NUMBER, bankAccount.getAccountNumber());
@@ -117,7 +119,7 @@ public class BankAccountTest
     @Test
     public void testDeposit()
     {
-        bankAccountService.openAccount(TEST_ACCOUNT_NUMBER);
+        bankAccountService.openAccount(TEST_ACCOUNT_NUMBER, timeCreated);
         bankAccountService.deposit(TEST_ACCOUNT_NUMBER, 9999d, "deposit 9999$", depositTime);
         BankAccount bankAccount = bankAccountService.getAccount(TEST_ACCOUNT_NUMBER);
         assertNotNull(bankAccount);
@@ -128,7 +130,7 @@ public class BankAccountTest
     @Test
     public void testDepositTransaction()
     {
-        bankAccountService.openAccount(TEST_ACCOUNT_NUMBER);
+        bankAccountService.openAccount(TEST_ACCOUNT_NUMBER, timeCreated);
         bankAccountService.deposit(TEST_ACCOUNT_NUMBER, 9999d, "deposit 9999$", depositTime);
         BankAccount bankAccount = bankAccountService.getAccount(TEST_ACCOUNT_NUMBER);
 
@@ -145,9 +147,9 @@ public class BankAccountTest
     @Test
     public void testWithdraw()
     {
-        bankAccountService.openAccount(TEST_ACCOUNT_NUMBER);
-        bankAccountService.deposit(TEST_ACCOUNT_NUMBER, 9999d, "deposit 9999$", new Date());
-        bankAccountService.withdraw(TEST_ACCOUNT_NUMBER, 99d, "withdraw 99$", new Date());
+        bankAccountService.openAccount(TEST_ACCOUNT_NUMBER, timeCreated);
+        bankAccountService.deposit(TEST_ACCOUNT_NUMBER, 9999d, "deposit 9999$", timeCreated);
+        bankAccountService.withdraw(TEST_ACCOUNT_NUMBER, 99d, "withdraw 99$", timeCreated);
         BankAccount bankAccount = bankAccountService.getAccount(TEST_ACCOUNT_NUMBER);
         assertNotNull(bankAccount);
         assertEquals(TEST_ACCOUNT_NUMBER, bankAccount.getAccountNumber());
@@ -157,7 +159,7 @@ public class BankAccountTest
     @Test
     public void testWithdrawTransaction()
     {
-        bankAccountService.openAccount(TEST_ACCOUNT_NUMBER);
+        bankAccountService.openAccount(TEST_ACCOUNT_NUMBER, timeCreated);
         bankAccountService.withdraw(TEST_ACCOUNT_NUMBER, 11d, "withdraw 11$", withdrawTime);
         BankAccount bankAccount = bankAccountService.getAccount(TEST_ACCOUNT_NUMBER);
 
@@ -174,7 +176,7 @@ public class BankAccountTest
     @Test
     public void testAllTransaction()
     {
-        bankAccountService.openAccount(TEST_ACCOUNT_NUMBER);
+        bankAccountService.openAccount(TEST_ACCOUNT_NUMBER, timeCreated);
         bankAccountService.deposit(TEST_ACCOUNT_NUMBER, 9999d, "deposit 9999$", depositTime);
         bankAccountService.withdraw(TEST_ACCOUNT_NUMBER, 11d, "withdraw 11$", withdrawTime);
         BankAccount bankAccount = bankAccountService.getAccount(TEST_ACCOUNT_NUMBER);
@@ -187,7 +189,7 @@ public class BankAccountTest
     @Test
     public void testTransactionByTimeRange()
     {
-        bankAccountService.openAccount(TEST_ACCOUNT_NUMBER);
+        bankAccountService.openAccount(TEST_ACCOUNT_NUMBER, timeCreated);
         bankAccountService.deposit(TEST_ACCOUNT_NUMBER, 9999d, "deposit 9999$", depositTime);
         bankAccountService.withdraw(TEST_ACCOUNT_NUMBER, 11d, "withdraw 11$", withdrawTime);
         bankAccountService.deposit(TEST_ACCOUNT_NUMBER, 9999d, "deposit 9999$", depositTime2);
@@ -206,7 +208,7 @@ public class BankAccountTest
     @Test
     public void testLatestTransactions()
     {
-        bankAccountService.openAccount(TEST_ACCOUNT_NUMBER);
+        bankAccountService.openAccount(TEST_ACCOUNT_NUMBER, timeCreated);
         bankAccountService.deposit(TEST_ACCOUNT_NUMBER, 9999d, "deposit 9999$", depositTime);
         bankAccountService.withdraw(TEST_ACCOUNT_NUMBER, 11d, "withdraw 11$", withdrawTime);
         bankAccountService.deposit(TEST_ACCOUNT_NUMBER, 9999d, "deposit 9999$", depositTime2);
@@ -216,5 +218,12 @@ public class BankAccountTest
         List<Transaction> transactions = bankAccountService.getLatestTransactions(bankAccount, 2);
         assertNotNull(transactions);
         assertEquals(2, transactions.size());
+    }
+
+    @Test
+    public void testCreateAccountWithTime()
+    {
+        BankAccount bankAccount = bankAccountService.openAccount(TEST_ACCOUNT_NUMBER, timeCreated);
+        assertEquals(timeCreated, bankAccount.getTimeCreated());
     }
 }

@@ -12,7 +12,7 @@ import java.util.List;
  */
 public interface BankAccountService
 {
-    BankAccount openAccount(long accountNumber);
+    BankAccount openAccount(long accountNumber, Date timeCreated);
 
     BankAccount getAccount(long accountNumber);
 
