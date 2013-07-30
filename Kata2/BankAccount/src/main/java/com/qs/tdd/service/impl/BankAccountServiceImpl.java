@@ -7,6 +7,7 @@ import com.qs.tdd.model.Transaction;
 import com.qs.tdd.service.BankAccountService;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -90,6 +91,25 @@ public class BankAccountServiceImpl implements BankAccountService
     @Override
     public List<Transaction> getLatestTransactions(BankAccount bankAccount, int total)
     {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        List<Transaction> transactionList = transactionDAO.findByAccount(bankAccount);
+        List<Transaction> results = new ArrayList<Transaction>();
+        if (total >= transactionList.size())
+        {
+            return transactionList;
+        }
+
+        if (transactionList.size() > 0)
+        {
+            int tmp = 0;
+            for (int i = transactionList.size(); i > 0; i--)
+            {
+                if (tmp < total)
+                {
+                    results.add(transactionList.get(i-1));
+                }
+                tmp++;
+            }
+        }
+        return results;
     }
 }
