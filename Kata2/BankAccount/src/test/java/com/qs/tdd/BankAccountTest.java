@@ -16,6 +16,7 @@ import org.mockito.stubbing.Answer;
 
 import static junit.framework.Assert.assertNotNull;
 import static junit.framework.TestCase.assertEquals;
+import static org.mockito.Mockito.*;
 
 /**
  * User: Hunter
@@ -33,13 +34,27 @@ public class BankAccountTest
     public void setup()
     {
         MockitoAnnotations.initMocks(this);
+
+        final BankAccount cacheAccountForModify = new BankAccount(123456789, 0);
+
         Mockito.when(bankAccountDAO.getAccount(Mockito.anyLong())).then(new Answer<BankAccount>()
         {
             public BankAccount answer(InvocationOnMock invocationOnMock) throws Throwable
             {
-                return new BankAccount(123456789, 0);
+                return cacheAccountForModify;
             }
         });
+
+        doAnswer(new Answer<Void>()
+        {
+            @Override
+            public Void answer(InvocationOnMock invocation) throws Throwable
+            {
+                cacheAccountForModify.setBalance(((BankAccount) invocation.getArguments()[0]).getBalance());
+                return null;
+            }
+        }).when(bankAccountDAO).update((BankAccount) anyObject());
+
     }
 
     @Test

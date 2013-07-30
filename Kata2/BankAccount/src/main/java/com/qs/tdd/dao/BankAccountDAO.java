@@ -11,4 +11,6 @@ public interface BankAccountDAO
     public void save(BankAccount bankAccount);
 
     BankAccount getAccount(long accountNumber);
+
+    void update(BankAccount account);
 }

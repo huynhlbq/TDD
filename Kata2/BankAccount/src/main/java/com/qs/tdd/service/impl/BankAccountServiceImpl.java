@@ -30,6 +30,8 @@ public class BankAccountServiceImpl implements BankAccountService
     @Override
     public void deposit(long accountNumber, double amount, String description)
     {
-        //To change body of implemented methods use File | Settings | File Templates.
+        BankAccount account = getAccount(accountNumber);
+        account.setBalance(account.getBalance() + amount);
+        bankAccountDAO.update(account);
     }
 }
