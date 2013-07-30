@@ -20,6 +20,6 @@ public class BankAccountTest
     public void testCreateAccount()
     {
         BankAccount bankAccount = bankAccountService.openAccount(123456678);
-        assertEquals(0, bankAccount.getBalance());
+        assertEquals(0d, bankAccount.getBalance());
     }
 }

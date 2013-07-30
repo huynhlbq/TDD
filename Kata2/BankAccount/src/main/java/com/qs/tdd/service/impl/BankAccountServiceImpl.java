@@ -14,7 +14,7 @@ public class BankAccountServiceImpl implements BankAccountService
     {
         BankAccount bankAccount = new BankAccount();
         bankAccount.setAccountNumber(accountNumber);
-        bankAccount.setBalance(-1);
+        bankAccount.setBalance(0);
         return bankAccount;
     }
 }
