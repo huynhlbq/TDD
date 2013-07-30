@@ -51,6 +51,19 @@ public class BankAccountServiceImpl implements BankAccountService
     @Override
     public List<Transaction> getTransactions(BankAccount bankAccount, Date startTime, Date endTime)
     {
-        return null;
+        List<Transaction> transactionList = transactionDAO.findByAccount(bankAccount);
+        List<Transaction> results = new ArrayList<Transaction>();
+        if (transactionList.size() > 0)
+        {
+            for (Transaction transaction : transactionList)
+            {
+                if (transaction.getTransactionTimeStamp().after(startTime) &&
+                        transaction.getTransactionTimeStamp().before(endTime))
+                {
+                    results.add(transaction);
+                }
+            }
+        }
+        return results;
     }
 }
