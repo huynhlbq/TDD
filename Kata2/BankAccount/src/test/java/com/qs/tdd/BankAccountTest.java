@@ -43,7 +43,9 @@ public class BankAccountTest
     BankAccountService bankAccountService = new BankAccountServiceImpl();
 
     private Date depositTime;
+    private Date depositTime2;
     private Date withdrawTime;
+    private Date withdrawTime2;
 
     @Before
     public void setup() throws ParseException
@@ -52,6 +54,8 @@ public class BankAccountTest
 
         depositTime = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss").parse("2013/07/30 11:10:10");
         withdrawTime = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss").parse("2013/07/30 14:13:12");
+        depositTime2 = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss").parse("2013/07/30 15:10:10");
+        withdrawTime2 = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss").parse("2013/07/30 16:13:12");
 
         final BankAccount cacheAccountForModify = new BankAccount(TEST_ACCOUNT_NUMBER, 0);
 
@@ -178,5 +182,25 @@ public class BankAccountTest
         List<Transaction> transactions = bankAccountService.getAllTransactions(bankAccount);
         assertNotNull(transactions);
         assertEquals(2, transactions.size());
+    }
+
+    @Test
+    public void testTransactionByTimeRange()
+    {
+        bankAccountService.openAccount(TEST_ACCOUNT_NUMBER);
+        bankAccountService.deposit(TEST_ACCOUNT_NUMBER, 9999d, "deposit 9999$", depositTime);
+        bankAccountService.withdraw(TEST_ACCOUNT_NUMBER, 11d, "withdraw 11$", withdrawTime);
+        bankAccountService.deposit(TEST_ACCOUNT_NUMBER, 9999d, "deposit 9999$", depositTime2);
+        bankAccountService.withdraw(TEST_ACCOUNT_NUMBER, 9999d, "withdraw 9999$", withdrawTime2);
+        BankAccount bankAccount = bankAccountService.getAccount(TEST_ACCOUNT_NUMBER);
+
+        //before withdrawTime 1 milli
+        Date startTime = new Date(withdrawTime.getTime() - 1);
+        //after withdrawTime2 1 milli
+        Date endTime = new Date(withdrawTime2.getTime() + 1);
+        List<Transaction> transactions = bankAccountService.getTransactions(bankAccount, startTime, endTime);
+        assertNotNull(transactions);
+        assertEquals(3, transactions.size());
+        assertEquals(withdrawTime, transactions.get(0).getTransactionTimeStamp());
     }
 }
