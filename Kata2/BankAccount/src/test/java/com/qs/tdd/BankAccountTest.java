@@ -32,7 +32,7 @@ import static org.mockito.Mockito.doAnswer;
  */
 public class BankAccountTest
 {
-    public static final int TEST_ACCOUNT_NUMBER = 123456789;
+    public static final long TEST_ACCOUNT_NUMBER = 123456789;
     @Mock
     private BankAccountDAO bankAccountDAO;
 
@@ -134,5 +134,17 @@ public class BankAccountTest
         assertNotNull(transactions);
         assertEquals(1, transactions.size());
         assertEquals(date1, transactions.get(0).getTransactionTimeStamp());
+    }
+
+    @Test
+    public void testWithdraw()
+    {
+        bankAccountService.openAccount(TEST_ACCOUNT_NUMBER);
+        bankAccountService.deposit(TEST_ACCOUNT_NUMBER, 9999d, "deposit 9999$", new Date());
+        bankAccountService.withdraw(TEST_ACCOUNT_NUMBER, 99d, "withdraw 99$", new Date());
+        BankAccount bankAccount = bankAccountService.getAccount(TEST_ACCOUNT_NUMBER);
+        assertNotNull(bankAccount);
+        assertEquals(TEST_ACCOUNT_NUMBER, bankAccount.getAccountNumber());
+        assertEquals(9900d, bankAccount.getBalance());
     }
 }

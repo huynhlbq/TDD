@@ -19,4 +19,6 @@ public interface BankAccountService
     void deposit(long accountNumber, double amount, String description, Date time);
 
     List<Transaction> getTransactions(BankAccount bankAccount, Date startTime, Date endTime);
+
+    void withdraw(long testAccountNumber, double amount, String description, Date time);
 }

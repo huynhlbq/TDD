@@ -66,4 +66,10 @@ public class BankAccountServiceImpl implements BankAccountService
         }
         return results;
     }
+
+    @Override
+    public void withdraw(long testAccountNumber, double amount, String description, Date time)
+    {
+        //To change body of implemented methods use File | Settings | File Templates.
+    }
 }
