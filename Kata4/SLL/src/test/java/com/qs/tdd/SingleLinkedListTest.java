@@ -14,6 +14,8 @@ import static junit.framework.TestCase.assertEquals;
  */
 public class SingleLinkedListTest
 {
+    private static final int CONSTANT = 10;
+
     @Test
     public void testCreatedEmptyList()
     {
@@ -25,12 +27,25 @@ public class SingleLinkedListTest
     @SuppressWarnings("unchecked")
     public void testCreatedListFromArrayOfObject()
     {
-        List objects = new ArrayList();
-        objects.add(12);
-        objects.add("test");
-        objects.add("end");
-        SingleLinkedList linkedList = new SingleLinkedList(objects.toArray());
-        assertEquals(3, linkedList.size());
+        List<Node> nodes = setupListNode();
+        SingleLinkedList linkedList = new SingleLinkedList(nodes);
+        assertEquals(CONSTANT, linkedList.size());
+    }
+
+    private List<Node> setupListNode()
+    {
+        List<Node> results = new ArrayList<Node>();
+        for (int i = 0; i < CONSTANT; i++)
+        {
+            Node node = new Node();
+            node.setValue("node " + i);
+            if (i < CONSTANT - 1)
+            {
+                node.setNext(i + 1);
+            }
+            results.add(node);
+        }
+        return results;
     }
 
 }
