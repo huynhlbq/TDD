@@ -6,6 +6,16 @@ package com.qs.tdd;
  */
 public class SingleLinkedList
 {
+    public SingleLinkedList(Object[] objects)
+    {
+
+    }
+
+    public SingleLinkedList()
+    {
+
+    }
+
     public int size()
     {
         return 0;
