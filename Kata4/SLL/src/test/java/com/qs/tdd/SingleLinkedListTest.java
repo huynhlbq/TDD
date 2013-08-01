@@ -2,6 +2,8 @@ package com.qs.tdd;
 
 import org.junit.Test;
 
+import static junit.framework.TestCase.assertEquals;
+
 /**
  * User: Hunter
  * Date: 8/1/13
@@ -9,9 +11,10 @@ import org.junit.Test;
 public class SingleLinkedListTest
 {
     @Test
-    public void testCreated()
+    public void testCreatedEmptyList()
     {
-
+        SingleLinkedList linkedList = new SingleLinkedList();
+        assertEquals(0, linkedList.size());
     }
 
 }
