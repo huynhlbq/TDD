@@ -24,12 +24,24 @@ public class SingleLinkedListTest
     }
 
     @Test
-    @SuppressWarnings("unchecked")
     public void testCreatedListFromArrayOfObject()
     {
         List<Node> nodes = setupListNode();
         SingleLinkedList linkedList = new SingleLinkedList(nodes);
         assertEquals(CONSTANT, linkedList.size());
+    }
+
+    @Test
+    public void testInsertAfterNode()
+    {
+        List<Node> nodes = setupListNode();
+        SingleLinkedList linkedList = new SingleLinkedList(nodes);
+
+        Node node = new Node();
+        node.setValue("node " + CONSTANT);
+        node.setNext(CONSTANT + 1);
+        linkedList.insertAfter(node, CONSTANT);
+        assertEquals(CONSTANT + 1, linkedList.size());
     }
 
     private List<Node> setupListNode()
