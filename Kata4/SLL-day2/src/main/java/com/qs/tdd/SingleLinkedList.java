@@ -33,6 +33,8 @@ public class SingleLinkedList
         return addAll(size, objects);
     }
 
+// -------------------------- OTHER METHODS --------------------------
+
     /**
      * add all objects from index
      *
@@ -65,11 +67,6 @@ public class SingleLinkedList
         return true;
     }
 
-    public Node get(int index)
-    {
-        return entry(index);
-    }
-
     private Node entry(int index)
     {
         Node e = header;
@@ -90,7 +87,23 @@ public class SingleLinkedList
         return e;
     }
 
-// -------------------------- OTHER METHODS --------------------------
+    public Node get(int index)
+    {
+        return entry(index);
+    }
+
+    public void insertAfter(int index, Object o)
+    {
+        insertBefore(o, (index == size ? header : entry(index)));
+    }
+
+    private void insertBefore(Object o, Node node)
+    {
+        Node insertNode = new Node(node, node.getPrevious(), o);
+        insertNode.getPrevious().setNext(insertNode);
+        insertNode.getNext().setPrevious(insertNode);
+        size++;
+    }
 
     public int size()
     {

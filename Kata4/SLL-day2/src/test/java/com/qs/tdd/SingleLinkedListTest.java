@@ -33,8 +33,8 @@ public class SingleLinkedListTest
     {
         List objects = setupListObject();
         SingleLinkedList linkedList = new SingleLinkedList(objects);
-        linkedList.insertAfter(linkedList.get(2), "insert obj");
-        assertEquals(4, linkedList.size());
+        linkedList.insertAfter(2, "insert obj");
+        assertEquals(5, linkedList.size());
     }
 
 
