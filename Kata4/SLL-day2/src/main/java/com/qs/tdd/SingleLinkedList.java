@@ -130,4 +130,9 @@ public class SingleLinkedList
     {
         return header.getPrevious().getData();
     }
+
+    public Object before(int index)
+    {
+        return null;  //To change body of created methods use File | Settings | File Templates.
+    }
 }
