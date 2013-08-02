@@ -128,6 +128,6 @@ public class SingleLinkedList
 
     public Object last()
     {
-        return null;  //To change body of created methods use File | Settings | File Templates.
+        return header.getPrevious().getData();
     }
 }
