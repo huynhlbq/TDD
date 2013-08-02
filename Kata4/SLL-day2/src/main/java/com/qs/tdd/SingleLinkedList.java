@@ -133,6 +133,6 @@ public class SingleLinkedList
 
     public Object before(int index)
     {
-        return null;  //To change body of created methods use File | Settings | File Templates.
+        return entry(index).getPrevious().getData();
     }
 }
