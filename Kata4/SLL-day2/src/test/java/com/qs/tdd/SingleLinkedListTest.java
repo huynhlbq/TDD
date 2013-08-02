@@ -70,6 +70,14 @@ public class SingleLinkedListTest
         assertEquals("obj 2", linkedList.before(2));
     }
 
+    @Test
+    public void testGetAfter()
+    {
+        List objects = setupListObject();
+        SingleLinkedList linkedList = new SingleLinkedList(objects);
+        assertEquals("obj 4", linkedList.after(2));
+    }
+
     @SuppressWarnings("unchecked")
     private List setupListObject()
     {

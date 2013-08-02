@@ -135,4 +135,9 @@ public class SingleLinkedList
     {
         return entry(index).getPrevious().getData();
     }
+
+    public Object after(int index)
+    {
+        return null;  //To change body of created methods use File | Settings | File Templates.
+    }
 }
