@@ -37,6 +37,15 @@ public class SingleLinkedListTest
         assertEquals(5, linkedList.size());
     }
 
+    @Test
+    public void testDelete()
+    {
+        List objects = setupListObject();
+        SingleLinkedList linkedList = new SingleLinkedList(objects);
+        linkedList.delete(2);
+        assertEquals(3, linkedList.size());
+    }
+
 
     @SuppressWarnings("unchecked")
     private List setupListObject()
