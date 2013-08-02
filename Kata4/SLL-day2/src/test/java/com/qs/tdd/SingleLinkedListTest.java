@@ -86,6 +86,16 @@ public class SingleLinkedListTest
         assertEquals("obj 3", linkedList.find("obj 3").getData());
     }
 
+    @Test
+    public void testAppend()
+    {
+        List objects = setupListObject();
+        SingleLinkedList linkedList = new SingleLinkedList(objects);
+        linkedList.append("appended node");
+        assertEquals(5, linkedList.size());
+        assertEquals("appended node", linkedList.last());
+    }
+
     @SuppressWarnings("unchecked")
     private List setupListObject()
     {
