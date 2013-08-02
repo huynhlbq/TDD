@@ -152,4 +152,12 @@ public class SingleLinkedList
         }
         return null;
     }
+
+    public void append(Object appendedNode)
+    {
+        Node insertNode = new Node(header, header.getPrevious(), appendedNode);
+        insertNode.getPrevious().setNext(insertNode);
+        insertNode.getNext().setPrevious(insertNode);
+        size++;
+    }
 }
