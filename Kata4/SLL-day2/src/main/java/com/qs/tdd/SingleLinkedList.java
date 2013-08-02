@@ -163,6 +163,9 @@ public class SingleLinkedList
 
     public void insertFirst(Object insertedObject)
     {
-        //To change body of created methods use File | Settings | File Templates.
+        Node insertNode = new Node(header.getNext(), header, insertedObject);
+        insertNode.getPrevious().setNext(insertNode);
+        insertNode.getNext().setPrevious(insertNode);
+        size++;
     }
 }
