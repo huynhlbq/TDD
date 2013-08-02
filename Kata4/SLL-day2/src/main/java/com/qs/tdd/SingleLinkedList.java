@@ -109,4 +109,15 @@ public class SingleLinkedList
     {
         return size;
     }
+
+    public void delete(int index)
+    {
+        Node deleteNode = entry(index);
+        deleteNode.getPrevious().setNext(deleteNode.getNext());
+        deleteNode.getNext().setPrevious(deleteNode.getPrevious());
+        deleteNode.setNext(null);
+        deleteNode.setPrevious(null);
+        deleteNode.setData(null);
+        size--;
+    }
 }
