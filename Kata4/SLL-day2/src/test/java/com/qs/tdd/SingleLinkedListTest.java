@@ -54,6 +54,13 @@ public class SingleLinkedListTest
         assertEquals("obj 1", linkedList.first());
     }
 
+    @Test
+    public void testGetLast()
+    {
+        List objects = setupListObject();
+        SingleLinkedList linkedList = new SingleLinkedList(objects);
+        assertEquals("obj 4", linkedList.last());
+    }
 
     @SuppressWarnings("unchecked")
     private List setupListObject()
