@@ -96,6 +96,16 @@ public class SingleLinkedListTest
         assertEquals("appended node", linkedList.last());
     }
 
+    @Test
+    public void testInsertFirst()
+    {
+        List objects = setupListObject();
+        SingleLinkedList linkedList = new SingleLinkedList(objects);
+        linkedList.insertFirst("inserted node");
+        assertEquals(5, linkedList.size());
+        assertEquals("inserted node", linkedList.first());
+    }
+
     @SuppressWarnings("unchecked")
     private List setupListObject()
     {
