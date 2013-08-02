@@ -120,4 +120,9 @@ public class SingleLinkedList
         deleteNode.setData(null);
         size--;
     }
+
+    public Object first()
+    {
+        return null;  //To change body of created methods use File | Settings | File Templates.
+    }
 }
