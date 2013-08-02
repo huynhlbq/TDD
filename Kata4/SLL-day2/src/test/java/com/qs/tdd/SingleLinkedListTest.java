@@ -83,7 +83,7 @@ public class SingleLinkedListTest
     {
         List objects = setupListObject();
         SingleLinkedList linkedList = new SingleLinkedList(objects);
-        assertEquals("obj 3", linkedList.find("obj 3"));
+        assertEquals("obj 3", linkedList.find("obj 3").getData());
     }
 
     @SuppressWarnings("unchecked")

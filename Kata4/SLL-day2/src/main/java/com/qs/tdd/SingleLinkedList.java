@@ -141,8 +141,15 @@ public class SingleLinkedList
         return entry(index).getNext().getData();
     }
 
-    public Object find(Object o)
+    public Node find(Object o)
     {
+        for (int i = 0; i < size; i++)
+        {
+            if (entry(i).getData().equals(o))
+            {
+                return entry(i);
+            }
+        }
         return null;  //To change body of created methods use File | Settings | File Templates.
     }
 }
