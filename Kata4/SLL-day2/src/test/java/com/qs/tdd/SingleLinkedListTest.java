@@ -28,6 +28,16 @@ public class SingleLinkedListTest
         assertEquals(4, linkedList.size());
     }
 
+    @Test
+    public void testInsertAfter()
+    {
+        List objects = setupListObject();
+        SingleLinkedList linkedList = new SingleLinkedList(objects);
+        linkedList.insertAfter(linkedList.get(2), "insert obj");
+        assertEquals(4, linkedList.size());
+    }
+
+
     @SuppressWarnings("unchecked")
     private List setupListObject()
     {

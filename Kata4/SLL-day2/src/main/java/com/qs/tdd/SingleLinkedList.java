@@ -65,6 +65,11 @@ public class SingleLinkedList
         return true;
     }
 
+    public Node get(int index)
+    {
+        return entry(index);
+    }
+
     private Node entry(int index)
     {
         Node e = header;
